@@ -1,10 +1,10 @@
 package com.example.simpleboard.post.model;
 
+import com.example.simpleboard.post.db.PostEntity;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import java.time.LocalDateTime;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,28 +15,30 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@AllArgsConstructor
-@NoArgsConstructor
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @JsonNaming(SnakeCaseStrategy.class)
-public class PostRequest {
+public class PostDto {
 
-  private Long boardId = 1L;
+  private Long id;
 
-  @NotBlank
+  private Long boardId;
+
   private String userName;
 
-  @Size(min = 4, max = 4)
   private String password;
 
-  @NotBlank
-  @Email
-  private String email;
+  private String status;
 
-  @NotBlank
   private String title;
 
-  @NotBlank
   private String content;
+
+  private String email;
+
+  private LocalDateTime postedAt;
+
+  private List<PostEntity> postList = List.of();
 
 }

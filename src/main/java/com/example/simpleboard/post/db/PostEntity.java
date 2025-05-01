@@ -1,14 +1,17 @@
 package com.example.simpleboard.post.db;
 
+import com.example.simpleboard.board.db.BoardEntity;
 import com.example.simpleboard.reply.db.ReplyEntity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Transient;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,7 +33,11 @@ public class PostEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private Long boardId;
+  @ManyToOne
+  @ToString.Exclude
+  @JsonIgnore
+  @JoinColumn(name = "board_id")
+  private BoardEntity board;
 
   private String userName;
 
@@ -47,7 +54,9 @@ public class PostEntity {
 
   private LocalDateTime postedAt;
 
-  @Transient
+  @OneToMany(
+      mappedBy = "post"
+  )
   private List<ReplyEntity> replyList = List.of();
 
 
